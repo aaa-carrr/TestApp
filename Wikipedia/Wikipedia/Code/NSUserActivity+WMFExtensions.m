@@ -62,15 +62,43 @@ __attribute__((annotate("returns_localized_nsstring"))) static inline NSString *
 + (instancetype)wmf_placesActivityWithURL:(NSURL *)activityURL {
     NSURLComponents *components = [NSURLComponents componentsWithURL:activityURL resolvingAgainstBaseURL:NO];
     NSURL *articleURL = nil;
+    NSString *placeName = nil;
+    NSString *placeLatitude = nil;
+    NSString *placeLongitude = nil;
     for (NSURLQueryItem *item in components.queryItems) {
         if ([item.name isEqualToString:@"WMFArticleURL"]) {
             NSString *articleURLString = item.value;
             articleURL = [NSURL URLWithString:articleURLString];
             break;
+        } else if ([item.name isEqualToString:@"WMFPlaceName"]) {
+            NSString *placeNameString = item.value;
+            placeName = placeNameString;
+        } else if ([item.name isEqualToString:@"WMFPlaceLatitude"]) {
+            NSString *placeLatitudeString = item.value;
+            placeLatitude = placeLatitudeString;
+        } else if ([item.name isEqualToString:@"WMFPlaceLongitude"]) {
+            NSString *placeLongitudeString = item.value;
+            placeLongitude = placeLongitudeString;
         }
     }
     NSUserActivity *activity = [self wmf_pageActivityWithName:@"Places"];
     activity.webpageURL = articleURL;
+    NSDictionary *userInfo = activity.userInfo;
+    if (userInfo) {
+        NSMutableDictionary *mutableUserInfo = userInfo.mutableCopy;
+        if (placeName) {
+            [mutableUserInfo setObject:placeName forKey:@"WMFPlaceName"];
+        }
+        
+        if (placeLatitude) {
+            [mutableUserInfo setObject:placeLatitude forKey:@"WMFPlaceLatitude"];
+        }
+        
+        if (placeLongitude) {
+            [mutableUserInfo setObject:placeLongitude forKey:@"WMFPlaceLongitude"];
+        }
+        activity.userInfo = mutableUserInfo;
+    }
     return activity;
 }
 
@@ -262,6 +290,18 @@ __attribute__((annotate("returns_localized_nsstring"))) static inline NSString *
     } else {
         return self.webpageURL;
     }
+}
+
+- (nullable NSString *)wmf_latitude {
+    return self.userInfo[@"WMFPlaceLatitude"];
+}
+
+- (nullable NSString *)wmf_longitude {
+    return self.userInfo[@"WMFPlaceLongitude"];
+}
+
+- (nullable NSString *)wmf_placeName {
+    return self.userInfo[@"WMFPlaceName"];
 }
 
 - (NSURL *)wmf_contentURL {

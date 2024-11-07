@@ -46,6 +46,12 @@ extern NSString *const WMFNavigateToActivityNotification;
 
 - (nullable NSURL *)wmf_linkURL;
 
+- (nullable NSString *)wmf_latitude;
+
+- (nullable NSString *)wmf_longitude;
+
+- (nullable NSString *)wmf_placeName;
+
 - (NSURL *)wmf_contentURL;
 
 + (NSURL *)wmf_baseURLForActivityOfType:(WMFUserActivityType)type;

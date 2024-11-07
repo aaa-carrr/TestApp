@@ -76,6 +76,10 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
         return PlaceSearchService(dataStore: self.dataStore)
     }()
     
+    // MARK: - Deeplink handling
+    private var deeplinkToRun: (() -> Void)?
+    private var isBeingDisplayed = false
+    
     // MARK: - View Lifecycle
     
     required init?(coder aDecoder: NSCoder) {
@@ -259,6 +263,14 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
         NotificationCenter.default.removeObserver(self, name: UIWindow.keyboardWillHideNotification, object: nil)
         locationManager.stopMonitoringLocation()
         mapView.showsUserLocation = false
+        isBeingDisplayed = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isBeingDisplayed = true
+        deeplinkToRun?()
+        deeplinkToRun = nil
     }
 
     private func constrainButtonsToNavigationBar() {
@@ -1952,6 +1964,39 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
         currentSearch = PlaceSearch(filter: .top, type: .location, origin: .user, sortStyle: .links, string: nil, region: region, localizedDescription: title, searchResult: searchResult, siteURL: articleURL.wmf_site)
     }
     
+    @objc public func showPlace(name: String) {
+        let showPlace = { [weak self] in
+            guard let self else { return }
+            searchBar.text = name
+            updateSearchCompletionsFromSearchBarTextForTopArticles(showFirstResult: true)
+        }
+        
+        if isBeingDisplayed {
+            showPlace()
+        } else {
+            deeplinkToRun = showPlace
+        }
+    }
+    
+    @objc public func showPlace(latitude: String, longitude: String) {
+        guard let latitudeDegrees = CLLocationDegrees(latitude),
+              let longitudeDegrees = CLLocationDegrees(longitude) else { return }
+        let coordinate = CLLocationCoordinate2D(latitude: latitudeDegrees, longitude: longitudeDegrees)
+        let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
+        
+        let showPlace = { [weak self] in
+            guard let self else { return }
+            currentSearch = PlaceSearch(filter: .top, type: .location, origin: .system, sortStyle: .none, string: nil, region: region, localizedDescription: nil, searchResult: nil)
+        }
+        
+        if isBeingDisplayed {
+            showPlace()
+        } else {
+            deeplinkToRun = showPlace
+        }
+    }
+    
+    
     fileprivate func searchForFirstSearchSuggestion() {
         if !searchSuggestionController.searches[PlaceSearchSuggestionController.completionSection].isEmpty {
             currentSearch = searchSuggestionController.searches[PlaceSearchSuggestionController.completionSection][0]
@@ -1982,7 +2027,7 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
         }
     }
     
-    func updateSearchCompletionsFromSearchBarTextForTopArticles() {
+    func updateSearchCompletionsFromSearchBarTextForTopArticles(showFirstResult: Bool = false) {
         guard let text = searchBar.text?.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines), text != "" else {
             updateSearchSuggestions(withCompletions: [], isSearchDone: false)
             self.isWaitingForSearchSuggestionUpdate = false
@@ -1998,7 +2043,9 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
                 self.isWaitingForSearchSuggestionUpdate = false
             }
         }) { (searchResult) in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                
                 guard text == self.searchBar.text else {
                     return
                 }
@@ -2009,6 +2056,9 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
                 
                 let completions = self.handleCompletion(searchResults: searchResult.results ?? [], siteURL: siteURL)
                 self.isWaitingForSearchSuggestionUpdate = false
+                if showFirstResult {
+                    searchForFirstSearchSuggestion()
+                }
                 guard completions.count < 10 else {
                     return
                 }
