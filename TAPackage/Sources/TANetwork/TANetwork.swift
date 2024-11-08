@@ -47,6 +47,8 @@ public struct TANetwork: TANetworkType {
             } catch {
                 throw TANetworkError.decodingFailed
             }
+        } catch let error as TANetworkError {
+            throw error
         } catch {
             throw TANetworkError.requestFailed
         }
@@ -61,11 +63,13 @@ public struct TANetwork: TANetworkType {
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.allHTTPHeaderFields = request.headers
         
-        guard let encondedBody = try? encoder.encode(request.body) else {
-            return nil
+        if let body = request.body {
+            guard let encondedBody = try? encoder.encode(body) else {
+                return nil
+            }
+            
+            urlRequest.httpBody = encondedBody
         }
-        
-        urlRequest.httpBody = encondedBody
         
         return urlRequest
     }

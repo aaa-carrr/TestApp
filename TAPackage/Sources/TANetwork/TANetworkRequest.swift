@@ -15,13 +15,13 @@ public struct TANetworkRequest<T: Encodable> {
     
     public let url: String
     public let method: TANetworkRequest.HTTPMethod
-    public let body: T
+    public let body: T?
     public let headers: [String: String]?
     
     public init(
         url: String,
         method: TANetworkRequest.HTTPMethod,
-        body: T,
+        body: T?,
         headers: [String : String]?
     ) {
         self.url = url

@@ -1,0 +1,46 @@
+{
+  "configurations" : [
+    {
+      "id" : "6484B91E-25BD-4949-AC25-263C2798DA39",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:TestApp.xcodeproj",
+      "identifier" : "62E087D62CDD512B00C228BC",
+      "name" : "TestApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TestApp.xcodeproj",
+        "identifier" : "62E087F02CDD512C00C228BC",
+        "name" : "TestAppUITests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TestApp.xcodeproj",
+        "identifier" : "62E087E62CDD512C00C228BC",
+        "name" : "TestAppTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TAPackage",
+        "identifier" : "TANetworkTests",
+        "name" : "TANetworkTests"
+      }
+    }
+  ],
+  "version" : 1
+}
