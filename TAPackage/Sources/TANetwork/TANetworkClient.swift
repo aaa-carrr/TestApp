@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol TANetworkClient {
+public protocol TANetworkClient: Sendable {
     func data(request: URLRequest) async throws -> (Data, URLResponse)
 }
 

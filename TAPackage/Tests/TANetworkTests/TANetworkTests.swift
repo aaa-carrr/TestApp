@@ -256,7 +256,7 @@ final class TANetworkTests: XCTestCase {
     }
 }
 
-// MARK: - Mocks
+// MARK: - Test Doubles
 final class TANetworkClientMock: TANetworkClient {
     var dataToBeReturned = Data()
     var responseToBeReturned = URLResponse(url: URL(string: "https://www.github.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)

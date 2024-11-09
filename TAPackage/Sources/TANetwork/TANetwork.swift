@@ -7,8 +7,8 @@
 
 import Foundation
 
-public protocol TANetworkType {
-    func perform<T: Decodable, S: Encodable>(_ request: TANetworkRequest<S>, for type: T.Type) async throws(TANetworkError) -> T
+public protocol TANetworkType: Sendable {
+    func perform<T: Decodable>(_ request: TANetworkRequest, for type: T.Type) async throws(TANetworkError) -> T
 }
 
 public struct TANetwork: TANetworkType {
@@ -26,7 +26,7 @@ public struct TANetwork: TANetworkType {
         self.encoder = encoder
     }
     
-    public func perform<T: Decodable, S: Encodable>(_ request: TANetworkRequest<S>, for type: T.Type) async throws(TANetworkError) -> T {
+    public func perform<T: Decodable>(_ request: TANetworkRequest, for type: T.Type) async throws(TANetworkError) -> T {
         guard let urlRequest = makeRequestURL(for: request) else {
             throw TANetworkError.invalidRequestFormat
         }
@@ -54,7 +54,7 @@ public struct TANetwork: TANetworkType {
         }
     }
     
-    private func makeRequestURL<S: Encodable>(for request: TANetworkRequest<S>) -> URLRequest? {
+    private func makeRequestURL(for request: TANetworkRequest) -> URLRequest? {
         guard let url = URL(string: request.url) else {
             return nil
         }

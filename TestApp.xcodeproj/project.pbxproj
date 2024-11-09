@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		622401312CDF68E900B58CD8 /* TAPlacesListingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 622401302CDF68E900B58CD8 /* TAPlacesListingFeature */; };
+		62E088262CDE9AF400C228BC /* TAPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 62E088252CDE9AF400C228BC /* TAPackage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		62E087E82CDD512C00C228BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -54,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62E088262CDE9AF400C228BC /* TAPackage in Frameworks */,
+				622401312CDF68E900B58CD8 /* TAPlacesListingFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +89,7 @@
 				62E087D92CDD512B00C228BC /* TestApp */,
 				62E087EA2CDD512C00C228BC /* TestAppTests */,
 				62E087F42CDD512C00C228BC /* TestAppUITests */,
+				62E088242CDE9AF400C228BC /* Frameworks */,
 				62E087D82CDD512B00C228BC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,6 +102,13 @@
 				62E087F12CDD512C00C228BC /* TestAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		62E088242CDE9AF400C228BC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -116,6 +131,8 @@
 			);
 			name = TestApp;
 			packageProductDependencies = (
+				62E088252CDE9AF400C228BC /* TAPackage */,
+				622401302CDF68E900B58CD8 /* TAPlacesListingFeature */,
 			);
 			productName = TestApp;
 			productReference = 62E087D72CDD512B00C228BC /* TestApp.app */;
@@ -558,6 +575,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		622401302CDF68E900B58CD8 /* TAPlacesListingFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TAPlacesListingFeature;
+		};
+		62E088252CDE9AF400C228BC /* TAPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TAPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 62E087CF2CDD512B00C228BC /* Project object */;
 }
