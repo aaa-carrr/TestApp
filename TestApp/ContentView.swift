@@ -7,13 +7,21 @@
 
 import SwiftUI
 import TAPlacesListingFeature
+import TAPlaceSearchFeature
 
 struct ContentView: View {
+    @State var showSearch = false
     var body: some View {
-        NavigationView {
-            TAPlacesListingView(viewModel: TAPlacesListingViewModel())
-                .navigationTitle("Places")
+        Button("Search") {
+            showSearch = true
         }
+        .sheet(isPresented: $showSearch) {
+            TAPlaceSearchFeatureView()
+        }
+//        NavigationView {
+//            TAPlacesListingView(viewModel: TAPlacesListingViewModel())
+//                .navigationTitle("Places")
+//        }
     }
 }
 

@@ -5,7 +5,7 @@
 //  Created by Artur Carneiro on 09/11/2024.
 //
 
-import SwiftUI
+import Foundation
 import TANetwork
 import TAShared
 

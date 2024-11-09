@@ -8,6 +8,7 @@ let mainTarget = "TAPackage"
 let networkingTarget = "TANetwork"
 let sharedTarget = "TAShared"
 let placesListingFeatureTarget = "TAPlacesListingFeature"
+let placeSearchFeatureTarget = "TAPlaceSearchFeature"
 
 // MARK: - Dependencies
 let snapshotTestingProductName = "SnapshotTesting"
@@ -36,6 +37,10 @@ let package = Package(
             name: placesListingFeatureTarget,
             targets: [placesListingFeatureTarget]
         ),
+        .library(
+            name: placeSearchFeatureTarget,
+            targets: [placeSearchFeatureTarget]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.17.6"),
@@ -82,6 +87,22 @@ let package = Package(
                 )
             ]
         ),
+        .target(
+            name: placeSearchFeatureTarget,
+            dependencies: [
+                sharedTarget.asTargetDependency,
+            ]
+        ),
+        .testTarget(
+            name: placeSearchFeatureTarget.asTestTarget,
+            dependencies: [
+                .product(
+                    name: snapshotTestingProductName,
+                    package: snapshotTestingPackageName
+                )
+            ]
+        )
+        
     ]
 )
 
