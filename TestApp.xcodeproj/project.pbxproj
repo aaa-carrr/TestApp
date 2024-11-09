@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		622401312CDF68E900B58CD8 /* TAPlacesListingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 622401302CDF68E900B58CD8 /* TAPlacesListingFeature */; };
-		622401332CDFC62D00B58CD8 /* TAPlaceSearchFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 622401322CDFC62D00B58CD8 /* TAPlaceSearchFeature */; };
 		62E088262CDE9AF400C228BC /* TAPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 62E088252CDE9AF400C228BC /* TAPackage */; };
 /* End PBXBuildFile section */
 
@@ -61,8 +59,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				62E088262CDE9AF400C228BC /* TAPackage in Frameworks */,
-				622401332CDFC62D00B58CD8 /* TAPlaceSearchFeature in Frameworks */,
-				622401312CDF68E900B58CD8 /* TAPlacesListingFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,8 +130,6 @@
 			name = TestApp;
 			packageProductDependencies = (
 				62E088252CDE9AF400C228BC /* TAPackage */,
-				622401302CDF68E900B58CD8 /* TAPlacesListingFeature */,
-				622401322CDFC62D00B58CD8 /* TAPlaceSearchFeature */,
 			);
 			productName = TestApp;
 			productReference = 62E087D72CDD512B00C228BC /* TestApp.app */;
@@ -580,14 +574,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		622401302CDF68E900B58CD8 /* TAPlacesListingFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TAPlacesListingFeature;
-		};
-		622401322CDFC62D00B58CD8 /* TAPlaceSearchFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TAPlaceSearchFeature;
-		};
 		62E088252CDE9AF400C228BC /* TAPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TAPackage;

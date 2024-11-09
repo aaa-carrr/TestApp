@@ -32,4 +32,3 @@ public struct TAPlaceSearchFeatureView: View {
         TAPlaceSearchView(viewModel: viewModel)
     }
 }
-

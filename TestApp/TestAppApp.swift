@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import TAPackage
 
 @main
 struct TestAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TAMainView()
         }
     }
 }
