@@ -10,7 +10,10 @@ import TAPlacesListingFeature
 
 struct ContentView: View {
     var body: some View {
-        TAPlacesListingView(viewModel: TAPlacesListingViewModel())
+        NavigationView {
+            TAPlacesListingView(viewModel: TAPlacesListingViewModel())
+                .navigationTitle("Places")
+        }
     }
 }
 

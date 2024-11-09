@@ -16,10 +16,9 @@ public struct TAPlacesListingView: View {
     }
     
     public var body: some View {
-        NavigationView {
+        Group {
             if viewModel.isLoadingPlaces && viewModel.places.isEmpty {
                 ProgressView()
-                    .navigationTitle("Places")
             } else {
                 List {
                     ForEach(viewModel.places) { place in
@@ -32,7 +31,6 @@ public struct TAPlacesListingView: View {
                     }
                 }
                 .animation(.default, value: viewModel.places)
-                .navigationTitle("Places")
                 .refreshable {
                     await viewModel.loadPlaces()
                 }
