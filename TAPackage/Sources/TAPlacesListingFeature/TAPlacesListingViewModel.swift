@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TANetwork
+import TAShared
 
 @MainActor
 public final class TAPlacesListingViewModel: ObservableObject {

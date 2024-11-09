@@ -6,6 +6,7 @@ import PackageDescription
 // MARK: - Targets
 let mainTarget = "TAPackage"
 let networkingTarget = "TANetwork"
+let sharedTarget = "TAShared"
 let placesListingFeatureTarget = "TAPlacesListingFeature"
 
 // MARK: - Dependencies
@@ -26,6 +27,10 @@ let package = Package(
         .library(
             name: networkingTarget,
             targets: [networkingTarget]
+        ),
+        .library(
+            name: sharedTarget,
+            targets: [sharedTarget]
         ),
         .library(
             name: placesListingFeatureTarget,
@@ -53,10 +58,18 @@ let package = Package(
                 networkingTarget.asTargetDependency,
             ]
         ),
+        .target(name: sharedTarget),
+        .testTarget(
+            name: sharedTarget.asTestTarget,
+            dependencies: [
+                sharedTarget.asTargetDependency,
+            ]
+        ),
         .target(
             name: placesListingFeatureTarget,
             dependencies: [
                 networkingTarget.asTargetDependency,
+                sharedTarget.asTargetDependency,
             ]
         ),
         .testTarget(

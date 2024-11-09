@@ -19,8 +19,17 @@
     {
       "target" : {
         "containerPath" : "container:TAPackage",
-        "identifier" : "TAPlacesListingFeatureTests",
-        "name" : "TAPlacesListingFeatureTests"
+        "identifier" : "TASharedTests",
+        "name" : "TASharedTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TestApp.xcodeproj",
+        "identifier" : "62E087F02CDD512C00C228BC",
+        "name" : "TestAppUITests"
       }
     },
     {
@@ -33,12 +42,10 @@
       }
     },
     {
-      "enabled" : false,
-      "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:TestApp.xcodeproj",
-        "identifier" : "62E087F02CDD512C00C228BC",
-        "name" : "TestAppUITests"
+        "containerPath" : "container:TAPackage",
+        "identifier" : "TAPlacesListingFeatureTests",
+        "name" : "TAPlacesListingFeatureTests"
       }
     },
     {

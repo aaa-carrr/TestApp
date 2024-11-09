@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TAPlacesListingFeature
+import TAShared
 
 struct TAWikipediaDeeplinkFactoryMock: TAWikipediaDeeplinkFactoryType {
     let placeNameUrlToBeReturned: URL?

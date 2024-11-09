@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TAPlacesListingFeature
+import TAShared
 
 struct IdentifierProviderMock: TAIdentifierProviderType {
     let uuid: UUID
