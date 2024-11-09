@@ -11,7 +11,7 @@ import TANetwork
 @MainActor
 public final class TAPlacesListingViewModel: ObservableObject {
     // MARK: - Navigation
-    enum Navigation: Equatable {
+    public enum Navigation: Equatable {
         case openLocation(URL)
     }
     
@@ -20,15 +20,18 @@ public final class TAPlacesListingViewModel: ObservableObject {
     
     // MARK: - Init
     public init(
-        network: TANetworkType = TANetwork()
+        network: TANetworkType = TANetwork(),
+        navigation: Navigation? = nil
     ) {
         self.network = network
+        self.navigation = navigation
     }
     
     // MARK: - API
     @Published private(set) var places: [TAPlace] = []
     @Published private(set) var isLoadingPlaces = false
     @Published var showMalformedUrlError = false
+    @Published var showLoadPlacesError = false
     @Published var navigation: Navigation?
     
     func placeSelected(_ place: TAPlace) {
@@ -63,7 +66,7 @@ public final class TAPlacesListingViewModel: ObservableObject {
             }
             self.places = places
         } catch {
-            // TODO: Handle error
+            showLoadPlacesError = true
         }
     }
     

@@ -43,22 +43,52 @@ public struct TAPlacesListingView: View {
         }
         .onChange(of: viewModel.navigation) { newValue in
             if let newValue {
-                switch newValue {
-                case .openLocation(let url):
-                    openUrl(url) { _ in
-                        viewModel.navigation = nil
-                    }
-                }
+                handle(navigation: newValue)
             }
         }
+        .onAppear(perform: {
+            if let navigation = viewModel.navigation {
+                handle(navigation: navigation)
+            }
+        })
         .alert("Error", isPresented: $viewModel.showMalformedUrlError) {
-            Button("OK") {
+            Button(role: .cancel) {
                 viewModel.showMalformedUrlError = false
+            } label: {
+                Text("OK")
             }
         } message: {
             Text("Sorry, we couldn't open this place.")
         }
+        .alert("Error", isPresented: $viewModel.showLoadPlacesError) {
+            Button(role: .destructive) {
+                viewModel.showLoadPlacesError = false
+                Task {
+                    await viewModel.loadPlaces()
+                }
+            } label: {
+                Text("Retry")
+            }
+            Button(role: .cancel) {
+                viewModel.showLoadPlacesError = false
+            } label: {
+                Text("OK")
+            }
+        } message: {
+            Text("We encountered an issue while looking for places.")
+        }
 
+
+    }
+    
+    // MARK: - Helpers
+    private func handle(navigation: TAPlacesListingViewModel.Navigation) {
+        switch navigation {
+        case .openLocation(let url):
+            openUrl(url) { _ in
+                viewModel.navigation = nil
+            }
+        }
     }
 }
 
