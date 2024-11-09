@@ -9,35 +9,6 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : {
-      "targets" : [
-        {
-          "containerPath" : "container:TAPackage",
-          "identifier" : "TANetwork",
-          "name" : "TANetwork"
-        },
-        {
-          "containerPath" : "container:TAPackage",
-          "identifier" : "TAPackage",
-          "name" : "TAPackage"
-        },
-        {
-          "containerPath" : "container:TAPackage",
-          "identifier" : "TAPlaceSearchFeature",
-          "name" : "TAPlaceSearchFeature"
-        },
-        {
-          "containerPath" : "container:TAPackage",
-          "identifier" : "TAPlacesListingFeature",
-          "name" : "TAPlacesListingFeature"
-        },
-        {
-          "containerPath" : "container:TAPackage",
-          "identifier" : "TAShared",
-          "name" : "TAShared"
-        }
-      ]
-    },
     "language" : "en",
     "region" : "NL",
     "targetForVariableExpansion" : {
