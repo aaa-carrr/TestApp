@@ -13,6 +13,7 @@ let placeSearchFeatureTarget = "TAPlaceSearchFeature"
 // MARK: - Dependencies
 let snapshotTestingProductName = "SnapshotTesting"
 let snapshotTestingPackageName = "swift-snapshot-testing"
+let snapshotsFolder = "__Snapshots__"
 
 // MARK: - Package
 let package = Package(
@@ -65,6 +66,9 @@ let package = Package(
                     name: snapshotTestingProductName,
                     package: snapshotTestingPackageName
                 )
+            ],
+            exclude: [
+                snapshotsFolder,
             ]
         ),
         .target(name: networkingTarget),
@@ -96,6 +100,9 @@ let package = Package(
                     name: snapshotTestingProductName,
                     package: snapshotTestingPackageName
                 )
+            ],
+            exclude: [
+                snapshotsFolder,
             ]
         ),
         .target(
@@ -112,6 +119,9 @@ let package = Package(
                     name: snapshotTestingProductName,
                     package: snapshotTestingPackageName
                 )
+            ],
+            exclude: [
+                snapshotsFolder,
             ]
         )
         
