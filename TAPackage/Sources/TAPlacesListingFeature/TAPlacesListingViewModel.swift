@@ -28,7 +28,7 @@ public final class TAPlacesListingViewModel: ObservableObject {
     // MARK: - API
     @Published private(set) var places: [TAPlace] = []
     @Published private(set) var isLoadingPlaces = false
-    @Published var isShowingMalformedUrlError = false
+    @Published var showMalformedUrlError = false
     @Published var navigation: Navigation?
     
     func placeSelected(_ place: TAPlace) {
@@ -40,7 +40,7 @@ public final class TAPlacesListingViewModel: ObservableObject {
         }
         
         guard let url else {
-            isShowingMalformedUrlError = true
+            showMalformedUrlError = true
             return
         }
         

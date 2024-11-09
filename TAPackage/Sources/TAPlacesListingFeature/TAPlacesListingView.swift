@@ -51,9 +51,9 @@ public struct TAPlacesListingView: View {
                 }
             }
         }
-        .alert("Error", isPresented: $viewModel.isShowingMalformedUrlError) {
+        .alert("Error", isPresented: $viewModel.showMalformedUrlError) {
             Button("OK") {
-                viewModel.isShowingMalformedUrlError = false
+                viewModel.showMalformedUrlError = false
             }
         } message: {
             Text("Sorry, we couldn't open this place.")
