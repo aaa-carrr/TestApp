@@ -47,7 +47,7 @@ struct TAPlacesListingRowView: View {
     TAPlacesListingRowView(
         place: TAPlace(id: UUID(), name: "Amsterdam", latitude: 12.4331231, longitude: 34.65234123),
         onSelection: { place in
-            print(place.name)
+            print(place.name ?? "-")
         }
     )
 }
