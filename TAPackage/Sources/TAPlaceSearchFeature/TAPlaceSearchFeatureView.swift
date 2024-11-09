@@ -13,12 +13,23 @@ public struct TAPlaceSearchFeatureView: View {
         case openLocation(URL)
     }
     
+    // MARK: - Properties
+    @ObservedObject private var viewModel: TAPlaceSearchViewModel
+    
     // MARK: - Init
-    public init() {}
+    public init() {
+        self.viewModel = TAPlaceSearchViewModel()
+    }
+    
+    init(
+        viewModel: TAPlaceSearchViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     // MARK: - Body
     public var body: some View {
-        TAPlaceSearchView(viewModel: TAPlaceSearchViewModel())
+        TAPlaceSearchView(viewModel: viewModel)
     }
 }
 
