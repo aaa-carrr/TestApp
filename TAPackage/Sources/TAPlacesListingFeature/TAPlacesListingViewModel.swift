@@ -16,10 +16,6 @@ public final class TAPlacesListingViewModel: ObservableObject {
     }
     
     // MARK: - Properties
-    @Published private(set) var places: [TAPlace] = []
-    @Published private(set) var isLoadingPlaces = false
-    @Published private(set) var navigation: Navigation?
-    
     private let network: TANetworkType
     
     // MARK: - Init
@@ -30,6 +26,10 @@ public final class TAPlacesListingViewModel: ObservableObject {
     }
     
     // MARK: - API
+    @Published private(set) var places: [TAPlace] = []
+    @Published private(set) var isLoadingPlaces = false
+    @Published private(set) var navigation: Navigation?
+    
     func placeSelected(_ place: TAPlace) {
         // TODO: Navigate with URL
     }

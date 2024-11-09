@@ -16,7 +16,7 @@ public struct TAPlacesListingView: View {
     
     public var body: some View {
         NavigationView {
-            if viewModel.isLoadingPlaces {
+            if viewModel.isLoadingPlaces && viewModel.places.isEmpty {
                 ProgressView()
                     .navigationTitle("Places")
             } else {
@@ -32,8 +32,12 @@ public struct TAPlacesListingView: View {
                 }
                 .animation(.default, value: viewModel.places)
                 .navigationTitle("Places")
+                .refreshable {
+                    await viewModel.loadPlaces()
+                }
             }
-        }.task {
+        }
+        .task {
             await viewModel.loadPlaces()
         }
     }
