@@ -9,7 +9,7 @@ import Foundation
 
 struct TAPlace: Equatable, Identifiable {
     var id: UUID
-    let name: String
-    let latitude: String
-    let longitude: String
+    let name: String?
+    let latitude: Double
+    let longitude: Double
 }

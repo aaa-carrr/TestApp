@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct TAPlacesListingView: View {
     @ObservedObject var viewModel: TAPlacesListingViewModel
+    @Environment(\.openURL) private var openUrl
     
     public init(viewModel: TAPlacesListingViewModel) {
         self.viewModel = viewModel
@@ -39,6 +40,16 @@ public struct TAPlacesListingView: View {
         }
         .task {
             await viewModel.loadPlaces()
+        }
+        .onChange(of: viewModel.navigation) { newValue in
+            if let newValue {
+                switch newValue {
+                case .openLocation(let url):
+                    openUrl(url) { _ in
+                        viewModel.navigation = nil
+                    }
+                }
+            }
         }
     }
 }

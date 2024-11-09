@@ -11,7 +11,7 @@ import TANetwork
 @MainActor
 public final class TAPlacesListingViewModel: ObservableObject {
     // MARK: - Navigation
-    enum Navigation {
+    enum Navigation: Equatable {
         case openLocation(URL)
     }
     
@@ -28,10 +28,22 @@ public final class TAPlacesListingViewModel: ObservableObject {
     // MARK: - API
     @Published private(set) var places: [TAPlace] = []
     @Published private(set) var isLoadingPlaces = false
-    @Published private(set) var navigation: Navigation?
+    @Published var navigation: Navigation?
     
     func placeSelected(_ place: TAPlace) {
-        // TODO: Navigate with URL
+        let url: URL?
+        if let placeName = place.name {
+            url = makeWikipediaPlaceNameDeeplink(for: placeName)
+        } else {
+            url = makeWikipediaPlaceLocationDeeplink(forPlaceLatitude: place.latitude, longitude: place.longitude)
+        }
+        
+        guard let url else {
+            // TODO: Handle error
+            return
+        }
+        
+        navigation = .openLocation(url)
     }
     
     func loadPlaces() async {
@@ -43,14 +55,23 @@ public final class TAPlacesListingViewModel: ObservableObject {
             let places = response.locations.map {
                 TAPlace(
                     id: UUID(),
-                    name: $0.name ?? "-",
-                    latitude: $0.latitude.formatted(),
-                    longitude: $0.longitude.formatted()
+                    name: $0.name,
+                    latitude: $0.latitude,
+                    longitude: $0.longitude
                 )
             }
             self.places = places
         } catch {
             // TODO: Handle error
         }
+    }
+    
+    // MARK: - Privates
+    private func makeWikipediaPlaceNameDeeplink(for placeName: String) -> URL? {
+        return URL(string: "wikipedia://places?WMFPlaceName=\(placeName)")
+    }
+    
+    private func makeWikipediaPlaceLocationDeeplink(forPlaceLatitude latitude: Double, longitude: Double) -> URL? {
+        return URL(string: "wikipedia://places?WMFPlaceLatitude=\(latitude)&WMFPlaceLongitude=\(longitude)")
     }
 }

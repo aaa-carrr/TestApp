@@ -15,7 +15,7 @@ struct TAPlacesListingRowView: View {
         HStack {
             VStack(spacing: 12) {
                 HStack {
-                    Text(place.name)
+                    Text(place.name ?? "-")
                         .font(.title3)
                         .bold()
                     Spacer()
@@ -23,8 +23,8 @@ struct TAPlacesListingRowView: View {
                 HStack {
                     Image(systemName: "location")
                         .foregroundStyle(.secondary)
-                    Text(place.latitude)
-                    Text(place.longitude)
+                    Text(place.latitude.formatted())
+                    Text(place.longitude.formatted())
                     Spacer()
                 }
             }
@@ -37,7 +37,7 @@ struct TAPlacesListingRowView: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(place.name)")
+        .accessibilityLabel(place.name ?? "Unknown place")
         .accessibilityHint("Redirects to Wikipedia app and opens the selected location")
         .accessibilityAddTraits(.isLink)
     }
@@ -45,7 +45,7 @@ struct TAPlacesListingRowView: View {
 
 #Preview {
     TAPlacesListingRowView(
-        place: TAPlace(id: UUID(), name: "Amsterdam", latitude: "12.4331231", longitude: "34.65234123"),
+        place: TAPlace(id: UUID(), name: "Amsterdam", latitude: 12.4331231, longitude: 34.65234123),
         onSelection: { place in
             print(place.name)
         }
