@@ -35,7 +35,7 @@ public final class TAPlacesListingViewModel: ObservableObject {
     
     // MARK: - API
     @Published private(set) var places: [TAPlace] = []
-    @Published private(set) var isLoadingPlaces = false
+    @Published var isLoadingPlaces = false
     @Published var showMalformedUrlError = false
     @Published var showLoadPlacesError = false
     @Published var navigation: Navigation?
