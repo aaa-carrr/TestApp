@@ -21,8 +21,8 @@
     {
       "target" : {
         "containerPath" : "container:TAPackage",
-        "identifier" : "TASharedTests",
-        "name" : "TASharedTests"
+        "identifier" : "TANetworkTests",
+        "name" : "TANetworkTests"
       }
     },
     {
@@ -35,8 +35,24 @@
     {
       "target" : {
         "containerPath" : "container:TAPackage",
-        "identifier" : "TANetworkTests",
-        "name" : "TANetworkTests"
+        "identifier" : "TAPackageTests",
+        "name" : "TAPackageTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TAPackage",
+        "identifier" : "TASharedTests",
+        "name" : "TASharedTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TestApp.xcodeproj",
+        "identifier" : "62E087E62CDD512C00C228BC",
+        "name" : "TestAppTests"
       }
     },
     {
@@ -53,15 +69,6 @@
         "containerPath" : "container:TestApp.xcodeproj",
         "identifier" : "62E087F02CDD512C00C228BC",
         "name" : "TestAppUITests"
-      }
-    },
-    {
-      "enabled" : false,
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:TestApp.xcodeproj",
-        "identifier" : "62E087E62CDD512C00C228BC",
-        "name" : "TestAppTests"
       }
     }
   ],

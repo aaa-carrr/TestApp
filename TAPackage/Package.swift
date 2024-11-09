@@ -53,12 +53,18 @@ let package = Package(
             dependencies: [
                 placesListingFeatureTarget.asTargetDependency,
                 placeSearchFeatureTarget.asTargetDependency,
+                networkingTarget.asTargetDependency,
+                sharedTarget.asTargetDependency,
             ]
         ),
         .testTarget(
             name: mainTarget.asTestTarget,
             dependencies: [
-                mainTarget.asTargetDependency
+                mainTarget.asTargetDependency,
+                .product(
+                    name: snapshotTestingProductName,
+                    package: snapshotTestingPackageName
+                )
             ]
         ),
         .target(name: networkingTarget),
