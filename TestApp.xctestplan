@@ -24,6 +24,27 @@
       }
     },
     {
+      "target" : {
+        "containerPath" : "container:TAPackage",
+        "identifier" : "TAPlaceSearchFeatureTests",
+        "name" : "TAPlaceSearchFeatureTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TAPackage",
+        "identifier" : "TANetworkTests",
+        "name" : "TANetworkTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TAPackage",
+        "identifier" : "TAPlacesListingFeatureTests",
+        "name" : "TAPlacesListingFeatureTests"
+      }
+    },
+    {
       "enabled" : false,
       "parallelizable" : true,
       "target" : {
@@ -39,20 +60,6 @@
         "containerPath" : "container:TestApp.xcodeproj",
         "identifier" : "62E087E62CDD512C00C228BC",
         "name" : "TestAppTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:TAPackage",
-        "identifier" : "TAPlacesListingFeatureTests",
-        "name" : "TAPlacesListingFeatureTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:TAPackage",
-        "identifier" : "TANetworkTests",
-        "name" : "TANetworkTests"
       }
     }
   ],

@@ -96,6 +96,7 @@ let package = Package(
         .testTarget(
             name: placeSearchFeatureTarget.asTestTarget,
             dependencies: [
+                placeSearchFeatureTarget.asTargetDependency,
                 .product(
                     name: snapshotTestingProductName,
                     package: snapshotTestingPackageName

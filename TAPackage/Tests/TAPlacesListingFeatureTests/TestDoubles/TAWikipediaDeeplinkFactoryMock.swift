@@ -19,6 +19,4 @@ struct TAWikipediaDeeplinkFactoryMock: TAWikipediaDeeplinkFactoryType {
     func makePlaceLocationDeeplink(forPlaceLatitude latitude: Double, longitude: Double) -> URL? {
         return placeLatitudeLongitudeUrlToBeReturned
     }
-    
-    
 }
