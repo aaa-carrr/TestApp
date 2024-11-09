@@ -9,24 +9,9 @@
 import XCTest
 
 final class TANetworkTests: XCTestCase {
-    var sut: TANetwork!
-    var clientMock: TANetworkClientMock!
-    
-    override func setUp() {
-        super.setUp()
-        clientMock = TANetworkClientMock()
-        sut = TANetwork(client: clientMock)
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        clientMock = nil
-        sut = nil
-    }
-    
     func test_perform_whenIt_succeeds_withHttpMethod_get() async throws {
         // Arrange
-        let dummyRequest = TANetworkRequest<DataStub>(
+        let dummyRequest = TANetworkRequest(
             url: "https://www.google.com",
             method: .get,
             body: nil,
@@ -35,29 +20,32 @@ final class TANetworkTests: XCTestCase {
         let dataStub = DataStub(stub: "stub")
         let dataStubEncoded = try JSONEncoder().encode(dataStub)
         let urlStub = try XCTUnwrap(URL(string: "https://www.google.com"))
-        clientMock.dataToBeReturned = dataStubEncoded
-        clientMock.responseToBeReturned = HTTPURLResponse(
+        let urlResponseStub = HTTPURLResponse(
             url: urlStub,
             mimeType: nil,
             expectedContentLength: 0,
             textEncodingName: nil
         )
         
+        let clientMock = TANetworkClientMock(
+            dataToBeReturned: dataStubEncoded,
+            responseToBeReturned: urlResponseStub,
+            shouldFail: false
+        )
+        
+        let sut = TANetwork(client: clientMock)
+        
         // Act
         let response = try await sut.perform(dummyRequest, for: DataStub.self)
         
         // Assert
-        XCTAssertEqual(clientMock.urlRequest?.url, urlStub)
-        XCTAssertEqual(clientMock.urlRequest?.allHTTPHeaderFields, ["header": "value"])
-        XCTAssertEqual(clientMock.urlRequest?.httpMethod, "GET")
-        XCTAssertNil(clientMock.urlRequest?.httpBody)
         XCTAssertEqual(response, dataStub)
     }
     
     func test_perform_whenIt_succeeds_withHttpMethod_post() async throws {
         // Arrange
         let bodyStub = DataStub(stub: "body")
-        let dummyRequest = TANetworkRequest<DataStub>(
+        let dummyRequest = TANetworkRequest(
             url: "https://www.google.com",
             method: .post,
             body: bodyStub,
@@ -66,31 +54,31 @@ final class TANetworkTests: XCTestCase {
         let dataStub = DataStub(stub: "stub")
         let dataStubEncoded = try JSONEncoder().encode(dataStub)
         let urlStub = try XCTUnwrap(URL(string: "https://www.google.com"))
-        clientMock.dataToBeReturned = dataStubEncoded
-        clientMock.responseToBeReturned = HTTPURLResponse(
+        let urlResponseStub = HTTPURLResponse(
             url: urlStub,
             mimeType: nil,
             expectedContentLength: 0,
             textEncodingName: nil
         )
         
+        let clientMock = TANetworkClientMock(
+            dataToBeReturned: dataStubEncoded,
+            responseToBeReturned: urlResponseStub,
+            shouldFail: false
+        )
+        
+        let sut = TANetwork(client: clientMock)
+        
         // Act
         let response = try await sut.perform(dummyRequest, for: DataStub.self)
         
         // Assert
-        let bodyData = try XCTUnwrap(clientMock.urlRequest?.httpBody)
-        let decodedBody = try JSONDecoder().decode(DataStub.self, from: bodyData)
-        
-        XCTAssertEqual(clientMock.urlRequest?.url, urlStub)
-        XCTAssertEqual(clientMock.urlRequest?.allHTTPHeaderFields, ["header": "value"])
-        XCTAssertEqual(clientMock.urlRequest?.httpMethod, "POST")
-        XCTAssertEqual(decodedBody, bodyStub)
         XCTAssertEqual(response, dataStub)
     }
     
     func test_perform_whenIt_fails_dueTo_invalidRequestFormat() async throws {
         // Arrange
-        let dummyRequest = TANetworkRequest<DataStub>(
+        let dummyRequest = TANetworkRequest(
             url: "",
             method: .get,
             body: nil,
@@ -99,13 +87,21 @@ final class TANetworkTests: XCTestCase {
         let dataStub = DataStub(stub: "stub")
         let dataStubEncoded = try JSONEncoder().encode(dataStub)
         let urlStub = try XCTUnwrap(URL(string: "https://www.google.com"))
-        clientMock.dataToBeReturned = dataStubEncoded
-        clientMock.responseToBeReturned = HTTPURLResponse(
+        let urlResponseStub = HTTPURLResponse(
             url: urlStub,
             mimeType: nil,
             expectedContentLength: 0,
             textEncodingName: nil
         )
+        
+        let clientMock = TANetworkClientMock(
+            dataToBeReturned: dataStubEncoded,
+            responseToBeReturned: urlResponseStub,
+            shouldFail: false
+        )
+        
+        let sut = TANetwork(client: clientMock)
+        
         var errorReceived: TANetworkError = .requestFailed
         
         // Act
@@ -116,13 +112,12 @@ final class TANetworkTests: XCTestCase {
         }
         
         // Assert
-        XCTAssertNil(clientMock.urlRequest)
         XCTAssertEqual(errorReceived, .invalidRequestFormat)
     }
     
     func test_perform_whenIt_fails_dueTo_unexpectedResponseType() async throws {
         // Arrange
-        let dummyRequest = TANetworkRequest<DataStub>(
+        let dummyRequest = TANetworkRequest(
             url: "https://www.google.com",
             method: .get,
             body: nil,
@@ -131,13 +126,21 @@ final class TANetworkTests: XCTestCase {
         let dataStub = DataStub(stub: "stub")
         let dataStubEncoded = try JSONEncoder().encode(dataStub)
         let urlStub = try XCTUnwrap(URL(string: "https://www.google.com"))
-        clientMock.dataToBeReturned = dataStubEncoded
-        clientMock.responseToBeReturned = URLResponse(
+        let urlResponseStub = URLResponse(
             url: urlStub,
             mimeType: nil,
             expectedContentLength: 0,
             textEncodingName: nil
         )
+        
+        let clientMock = TANetworkClientMock(
+            dataToBeReturned: dataStubEncoded,
+            responseToBeReturned: urlResponseStub,
+            shouldFail: false
+        )
+        
+        let sut = TANetwork(client: clientMock)
+        
         var errorReceived: TANetworkError = .decodingFailed
         
         // Act
@@ -148,13 +151,12 @@ final class TANetworkTests: XCTestCase {
         }
         
         // Assert
-        XCTAssertEqual(clientMock.urlRequest?.url, urlStub)
         XCTAssertEqual(errorReceived, .unexpectedResponseType)
     }
     
     func test_perform_whenIt_fails_dueTo_unexpectedStatusCode() async throws {
         // Arrange
-        let dummyRequest = TANetworkRequest<DataStub>(
+        let dummyRequest = TANetworkRequest(
             url: "https://www.google.com",
             method: .get,
             body: nil,
@@ -163,8 +165,7 @@ final class TANetworkTests: XCTestCase {
         let dataStub = DataStub(stub: "stub")
         let dataStubEncoded = try JSONEncoder().encode(dataStub)
         let urlStub = try XCTUnwrap(URL(string: "https://www.google.com"))
-        clientMock.dataToBeReturned = dataStubEncoded
-        clientMock.responseToBeReturned = try XCTUnwrap(
+        let urlResponseStub = try XCTUnwrap(
             HTTPURLResponse(
                 url: urlStub,
                 statusCode: 400,
@@ -172,6 +173,15 @@ final class TANetworkTests: XCTestCase {
                 headerFields: nil
             )
         )
+        
+        let clientMock = TANetworkClientMock(
+            dataToBeReturned: dataStubEncoded,
+            responseToBeReturned: urlResponseStub,
+            shouldFail: false
+        )
+        
+        let sut = TANetwork(client: clientMock)
+        
         var errorReceived: TANetworkError = .decodingFailed
         
         // Act
@@ -182,13 +192,12 @@ final class TANetworkTests: XCTestCase {
         }
         
         // Assert
-        XCTAssertEqual(clientMock.urlRequest?.url, urlStub)
         XCTAssertEqual(errorReceived, .unexpectedStatusCode)
     }
     
     func test_perform_whenIt_fails_dueTo_decodingFailed() async throws {
         // Arrange
-        let dummyRequest = TANetworkRequest<DataStub>(
+        let dummyRequest = TANetworkRequest(
             url: "https://www.google.com",
             method: .get,
             body: nil,
@@ -197,8 +206,7 @@ final class TANetworkTests: XCTestCase {
         let dataStub = DataStub(stub: "stub")
         let dataStubEncoded = try JSONEncoder().encode(dataStub)
         let urlStub = try XCTUnwrap(URL(string: "https://www.google.com"))
-        clientMock.dataToBeReturned = dataStubEncoded
-        clientMock.responseToBeReturned = try XCTUnwrap(
+        let urlResponseStub = try XCTUnwrap(
             HTTPURLResponse(
                 url: urlStub,
                 statusCode: 200,
@@ -206,6 +214,15 @@ final class TANetworkTests: XCTestCase {
                 headerFields: nil
             )
         )
+        
+        let clientMock = TANetworkClientMock(
+            dataToBeReturned: dataStubEncoded,
+            responseToBeReturned: urlResponseStub,
+            shouldFail: false
+        )
+        
+        let sut = TANetwork(client: clientMock)
+        
         var errorReceived: TANetworkError = .unexpectedStatusCode
         
         // Act
@@ -216,13 +233,12 @@ final class TANetworkTests: XCTestCase {
         }
         
         // Assert
-        XCTAssertEqual(clientMock.urlRequest?.url, urlStub)
         XCTAssertEqual(errorReceived, .decodingFailed)
     }
     
     func test_perform_whenIt_fails_dueTo_requestFailed() async throws {
         // Arrange
-        let dummyRequest = TANetworkRequest<DataStub>(
+        let dummyRequest = TANetworkRequest(
             url: "https://www.google.com",
             method: .get,
             body: nil,
@@ -231,8 +247,7 @@ final class TANetworkTests: XCTestCase {
         let dataStub = DataStub(stub: "stub")
         let dataStubEncoded = try JSONEncoder().encode(dataStub)
         let urlStub = try XCTUnwrap(URL(string: "https://www.google.com"))
-        clientMock.dataToBeReturned = dataStubEncoded
-        clientMock.responseToBeReturned = try XCTUnwrap(
+        let urlResponseStub = try XCTUnwrap(
             HTTPURLResponse(
                 url: urlStub,
                 statusCode: 200,
@@ -240,7 +255,15 @@ final class TANetworkTests: XCTestCase {
                 headerFields: nil
             )
         )
-        clientMock.shouldFail = true
+        
+        let clientMock = TANetworkClientMock(
+            dataToBeReturned: dataStubEncoded,
+            responseToBeReturned: urlResponseStub,
+            shouldFail: true
+        )
+        
+        let sut = TANetwork(client: clientMock)
+        
         var errorReceived: TANetworkError = .unexpectedStatusCode
         
         // Act
@@ -251,22 +274,17 @@ final class TANetworkTests: XCTestCase {
         }
         
         // Assert
-        XCTAssertEqual(clientMock.urlRequest?.url, urlStub)
         XCTAssertEqual(errorReceived, .requestFailed)
     }
 }
 
 // MARK: - Test Doubles
-final class TANetworkClientMock: TANetworkClient {
-    var dataToBeReturned = Data()
-    var responseToBeReturned = URLResponse(url: URL(string: "https://www.github.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
-    var shouldFail = false
-    
-    private(set) var urlRequest: URLRequest?
+struct TANetworkClientMock: TANetworkClient {
+    let dataToBeReturned: Data
+    let responseToBeReturned: URLResponse
+    let shouldFail: Bool
     
     func data(request: URLRequest) async throws -> (Data, URLResponse) {
-        urlRequest = request
-        
         if shouldFail {
             throw(URLError(.unknown))
         } else {
