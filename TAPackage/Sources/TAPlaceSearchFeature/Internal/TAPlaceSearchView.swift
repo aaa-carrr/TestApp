@@ -12,6 +12,14 @@ struct TAPlaceSearchView: View {
     @Environment(\.openURL) private var openUrl
     @Environment(\.dismiss) private var dismiss
     
+    private var isDoneButtonDisabled: Bool {
+        if viewModel.searchByCoordinates {
+            return (viewModel.latitude.isEmpty || viewModel.longitude.isEmpty)
+        } else {
+            return viewModel.place.isEmpty
+        }
+    }
+    
     init(viewModel: TAPlaceSearchViewModel) {
         self.viewModel = viewModel
     }
@@ -41,6 +49,7 @@ struct TAPlaceSearchView: View {
                     } label: {
                         Text("Done")
                     }
+                    .disabled(isDoneButtonDisabled)
                 }
                 
                 ToolbarItem(placement: .cancellationAction) {
