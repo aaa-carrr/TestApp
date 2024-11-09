@@ -8,6 +8,10 @@ let mainTarget = "TAPackage"
 let networkingTarget = "TANetwork"
 let placesListingFeatureTarget = "TAPlacesListingFeature"
 
+// MARK: - Dependencies
+let snapshotTestingProductName = "SnapshotTesting"
+let snapshotTestingPackageName = "swift-snapshot-testing"
+
 // MARK: - Package
 let package = Package(
     name: "TAPackage",
@@ -27,6 +31,9 @@ let package = Package(
             name: placesListingFeatureTarget,
             targets: [placesListingFeatureTarget]
         ),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.17.6"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -56,6 +63,10 @@ let package = Package(
             name: placesListingFeatureTarget.asTestTarget,
             dependencies: [
                 placesListingFeatureTarget.asTargetDependency,
+                .product(
+                    name: snapshotTestingProductName,
+                    package: snapshotTestingPackageName
+                )
             ]
         ),
     ]

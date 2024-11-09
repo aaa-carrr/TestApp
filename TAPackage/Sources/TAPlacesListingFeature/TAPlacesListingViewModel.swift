@@ -17,14 +17,20 @@ public final class TAPlacesListingViewModel: ObservableObject {
     
     // MARK: - Properties
     private let network: TANetworkType
+    private let identifierProvider: TAIdentifierProviderType
+    private let wikipediaDeeplinkFactory: TAWikipediaDeeplinkFactoryType
     
     // MARK: - Init
     public init(
         network: TANetworkType = TANetwork(),
+        identifierProvider: TAIdentifierProviderType = TAIdentifierProvider(),
+        wikipediaDeeplinkFactory: TAWikipediaDeeplinkFactoryType = TAWikipediaDeeplinkFactory(),
         navigation: Navigation? = nil
     ) {
         self.network = network
         self.navigation = navigation
+        self.identifierProvider = identifierProvider
+        self.wikipediaDeeplinkFactory = wikipediaDeeplinkFactory
     }
     
     // MARK: - API
@@ -37,9 +43,9 @@ public final class TAPlacesListingViewModel: ObservableObject {
     func placeSelected(_ place: TAPlace) {
         let url: URL?
         if let placeName = place.name {
-            url = makeWikipediaPlaceNameDeeplink(for: placeName)
+            url = wikipediaDeeplinkFactory.makePlaceNameDeeplink(for: placeName)
         } else {
-            url = makeWikipediaPlaceLocationDeeplink(forPlaceLatitude: place.latitude, longitude: place.longitude)
+            url = wikipediaDeeplinkFactory.makePlaceLocationDeeplink(forPlaceLatitude: place.latitude, longitude: place.longitude)
         }
         
         guard let url else {
@@ -58,7 +64,7 @@ public final class TAPlacesListingViewModel: ObservableObject {
             let response = try await network.perform(request, for: TAPlaceResponse.self)
             let places = response.locations.map {
                 TAPlace(
-                    id: UUID(),
+                    id: identifierProvider.id,
                     name: $0.name,
                     latitude: $0.latitude,
                     longitude: $0.longitude
@@ -68,14 +74,5 @@ public final class TAPlacesListingViewModel: ObservableObject {
         } catch {
             showLoadPlacesError = true
         }
-    }
-    
-    // MARK: - Privates
-    private func makeWikipediaPlaceNameDeeplink(for placeName: String) -> URL? {
-        return URL(string: "wikipedia://places?WMFPlaceName=\(placeName)")
-    }
-    
-    private func makeWikipediaPlaceLocationDeeplink(forPlaceLatitude latitude: Double, longitude: Double) -> URL? {
-        return URL(string: "wikipedia://places?WMFPlaceLatitude=\(latitude)&WMFPlaceLongitude=\(longitude)")
     }
 }

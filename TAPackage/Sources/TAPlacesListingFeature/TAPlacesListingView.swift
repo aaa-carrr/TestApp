@@ -25,7 +25,7 @@ public struct TAPlacesListingView: View {
                         TAPlacesListingRowView(
                             place: place,
                             onSelection: { place in
-                                self.viewModel.placeSelected(place)
+                                viewModel.placeSelected(place)
                             }
                         )
                     }

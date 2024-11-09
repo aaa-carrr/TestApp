@@ -17,12 +17,10 @@
   },
   "testTargets" : [
     {
-      "enabled" : false,
-      "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:TestApp.xcodeproj",
-        "identifier" : "62E087F02CDD512C00C228BC",
-        "name" : "TestAppUITests"
+        "containerPath" : "container:TAPackage",
+        "identifier" : "TAPlacesListingFeatureTests",
+        "name" : "TAPlacesListingFeatureTests"
       }
     },
     {
@@ -32,6 +30,15 @@
         "containerPath" : "container:TestApp.xcodeproj",
         "identifier" : "62E087E62CDD512C00C228BC",
         "name" : "TestAppTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TestApp.xcodeproj",
+        "identifier" : "62E087F02CDD512C00C228BC",
+        "name" : "TestAppUITests"
       }
     },
     {
