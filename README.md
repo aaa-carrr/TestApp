@@ -45,6 +45,9 @@ Please, use the main target (`TestApp`) to run all tests.
 ## Dependencies
 * [SnapshotTesting](https://github.com/pointfreeco/swift-snapshot-testing)
 
+## Wikipedia
+Regarding the Wikipedia app changes, check commit `f726545` for the changes I've made to allow deeplinking into their app.
+
 ## References
 * [Pointfree](https://www.pointfree.co)
 * [Hacking with Swift](https://www.hackingwithswift.com)
