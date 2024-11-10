@@ -49,31 +49,31 @@ public struct TAPlacesListingView: View {
                 handle(navigation: navigation)
             }
         })
-        .alert("Error", isPresented: $viewModel.showMalformedUrlError) {
+        .alert(Localizable.listingError, isPresented: $viewModel.showMalformedUrlError) {
             Button(role: .cancel) {
                 viewModel.showMalformedUrlError = false
             } label: {
-                Text("OK")
+                Text(Localizable.listingOk)
             }
         } message: {
-            Text("Sorry, we couldn't open this place.")
+            Text(Localizable.listingOpenErrorMessage)
         }
-        .alert("Error", isPresented: $viewModel.showLoadPlacesError) {
+        .alert(Localizable.listingError, isPresented: $viewModel.showLoadPlacesError) {
             Button(role: .destructive) {
                 viewModel.showLoadPlacesError = false
                 Task {
                     await viewModel.loadPlaces()
                 }
             } label: {
-                Text("Retry")
+                Text(Localizable.listingErrorRetry)
             }
             Button(role: .cancel) {
                 viewModel.showLoadPlacesError = false
             } label: {
-                Text("OK")
+                Text(Localizable.listingOk)
             }
         } message: {
-            Text("We encountered an issue while looking for places.")
+            Text(Localizable.listingLoadErrorMessage)
         }
 
 
