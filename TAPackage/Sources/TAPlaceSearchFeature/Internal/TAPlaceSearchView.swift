@@ -28,18 +28,18 @@ struct TAPlaceSearchView: View {
         NavigationView {
             Form {
                 Section {
-                    Toggle("Search by Coordinates", isOn: $viewModel.searchByCoordinates)
-                        .accessibilityHint("If Search by Coordinates is switched on, you'll need to search by providing latitude and longitude, otherwise all you need to provide is the name of a place")
+                    Toggle(Localizable.searchByCoordinatesToggle, isOn: $viewModel.searchByCoordinates)
+                        .accessibilityHint(Localizable.searchByCoordinatesAccessibilityHint)
                 }
                 
-                Section(viewModel.searchByCoordinates ? "Coordinates" : "Place") {
+                Section(viewModel.searchByCoordinates ? Localizable.searchHeaderCoordinates : Localizable.searchHeaderPlace) {
                     if viewModel.searchByCoordinates {
-                        TextField("Latitude", text: $viewModel.latitude)
+                        TextField(Localizable.searchCoordinatesLatitude, text: $viewModel.latitude)
                             .keyboardType(.decimalPad)
-                        TextField("Longitude", text: $viewModel.longitude)
+                        TextField(Localizable.searchCoordinatesLongitude, text: $viewModel.longitude)
                             .keyboardType(.decimalPad)
                     } else {
-                        TextField("Name", text: $viewModel.place)
+                        TextField(Localizable.searchPlaceName, text: $viewModel.place)
                     }
                 }
             }
@@ -48,21 +48,21 @@ struct TAPlaceSearchView: View {
                     Button {
                         viewModel.searchTapped()
                     } label: {
-                        Text("Done")
+                        Text(Localizable.searchDone)
                     }
                     .disabled(isDoneButtonDisabled)
-                    .accessibilityHint("By selecting this button, you'll be redirected to the Wikipedia app.")
+                    .accessibilityHint(Localizable.searchDoneAccessibilityHint)
                 }
                 
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         dismiss()
                     } label: {
-                        Text("Cancel")
+                        Text(Localizable.searchCancel)
                     }
                 }
             }
-            .navigationTitle("Search")
+            .navigationTitle(Localizable.search)
             .navigationBarTitleDisplayMode(.inline)
             .animation(.default, value: viewModel.searchByCoordinates)
         }
@@ -76,14 +76,14 @@ struct TAPlaceSearchView: View {
                 handle(navigation: navigation)
             }
         })
-        .alert("Error", isPresented: $viewModel.showMalformedUrlError) {
+        .alert(Localizable.searchError, isPresented: $viewModel.showMalformedUrlError) {
             Button(role: .cancel) {
                 viewModel.showMalformedUrlError = false
             } label: {
-                Text("OK")
+                Text(Localizable.searchOk)
             }
         } message: {
-            Text("Sorry, we couldn't open this place.")
+            Text(Localizable.searchErrorMessage)
         }
     }
     
