@@ -8,6 +8,11 @@
 @testable import TANetwork
 import XCTest
 
+// Initially, I wrote more assertions to check if the `URLRequest` constructed inside `TANetwork`
+// was actually constructed correctly. However, due to the `Sendable` required I had issues creating
+// a mutable mock to allow mutating a variable to contain the request constructed.
+// See commit `fa9b25e` for the tests using a more "standard" mock.
+
 final class TANetworkTests: XCTestCase {
     func test_perform_whenIt_succeeds_withHttpMethod_get() async throws {
         // Arrange

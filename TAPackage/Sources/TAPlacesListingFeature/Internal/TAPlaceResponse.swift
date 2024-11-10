@@ -5,6 +5,9 @@
 //  Created by Artur Carneiro on 09/11/2024.
 //
 
+// I'm keeping this response objects inside the feature module
+// so each feature can perform whatever it wants with the endpoint objects they use.
+// The more we share across modules, the more we need to take into consideration when making changes.
 struct TAPlaceResponse: Decodable {
     let locations: [TAPlaceModel]
 }

@@ -70,7 +70,7 @@ struct TAPlaceSearchView: View {
             if let newValue {
                 handle(navigation: newValue)
             }
-        }
+        } // I'm adding both `onChange` and `onAppear` since on iOS 15 we can't provide an initial value to `onChange`
         .onAppear(perform: {
             if let navigation = viewModel.navigation {
                 handle(navigation: navigation)

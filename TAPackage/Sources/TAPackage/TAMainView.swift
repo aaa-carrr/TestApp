@@ -11,6 +11,10 @@ public struct TAMainView: View {
     
     // MARK: - Init
     public init(network: TANetworkType = TANetwork()) {
+        // I generally prefer dependency injection through init so I did have to dig a bit to find out if
+        // doing the below is recommended. Apple provides some info on this page https://developer.apple.com/documentation/swiftui/stateobject.
+        // Since this `network` value is already immutable and doesn't contain any state,
+        // I feel like passing it through the init like this is fine.
         _listingViewModel = StateObject(wrappedValue: TAPlacesListingViewModel(network: network))
     }
     

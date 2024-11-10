@@ -57,6 +57,10 @@ final class TAPlaceSearchViewModel: ObservableObject {
     }
     
     // MARK: - Privates
+    // I think that all of the formatting done below can be done better, either by using a proper formatter
+    // or writing more code to catch more exceptions but for now this covers the main issues I found:
+    // * Whitespace added at the end of a word due to autocorrect or by picking a suggestion in the keyboard
+    // * Locales in which the decimal separator is a comma instead of a point
     private var formattedPlaceName: String {
         let placeArray = Array(place)
         var mutablePlaceArray = Array(place)

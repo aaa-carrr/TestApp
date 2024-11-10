@@ -9,6 +9,8 @@ import SwiftUI
 
 public struct TAPlacesListingView: View {
     @ObservedObject var viewModel: TAPlacesListingViewModel
+    // Ideally I would be able to mock this action to write unit tests for the view to guarantee a tap of a button
+    // attemps to opens an URL but this kind of test might be better done using UI tests in SwiftUI's case.
     @Environment(\.openURL) private var openUrl
     
     public init(viewModel: TAPlacesListingViewModel) {
@@ -75,8 +77,10 @@ public struct TAPlacesListingView: View {
         } message: {
             Text(Localizable.listingLoadErrorMessage)
         }
-
-
+        
+        // I've used alerts to display errors but they are horrible to run snapshot tests on.
+        // I would in the future write smaller views to handle the presentation of errors
+        // so we can properly test these views.
     }
     
     // MARK: - Helpers

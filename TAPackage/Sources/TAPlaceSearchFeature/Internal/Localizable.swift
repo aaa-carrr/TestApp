@@ -5,6 +5,10 @@
 //  Created by Artur Carneiro on 10/11/2024.
 //
 
+// Some of these strings are repeated in the other feature
+// but I'd like to keep the features as separate as possible, sharing as little code as I can,
+// including strings. However, if necessary, we can move some of these more generic strings
+// to `TAShared`
 enum Localizable {
     static let searchByCoordinatesToggle = String(localized: "search-by-coordinates", bundle: .module)
     static let searchByCoordinatesAccessibilityHint = String(localized: "search-by-coordinates-accessibility-hint", bundle: .module)

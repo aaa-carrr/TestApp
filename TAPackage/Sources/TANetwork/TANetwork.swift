@@ -16,6 +16,9 @@ public struct TANetwork: TANetworkType {
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
     
+    // I prefer passing in a decoder and encoder in case a specific feature/module in the app
+    // needs a super custom decoding strategy. Having only one hardcoded decoder makes it harder for us
+    // to make these kind of changes in the future
     public init(
         client: TANetworkClient = URLSession.shared,
         decoder: JSONDecoder = JSONDecoder(),
@@ -27,6 +30,8 @@ public struct TANetwork: TANetworkType {
     }
     
     public func perform<T: Decodable>(_ request: TANetworkRequest, for type: T.Type) async throws(TANetworkError) -> T {
+        // This currently doesn't handle retrying or any kind of logging but it's something
+        // that could be added if necessary.
         guard let urlRequest = makeRequestURL(for: request) else {
             throw TANetworkError.invalidRequestFormat
         }
@@ -38,6 +43,7 @@ public struct TANetwork: TANetworkType {
                 throw TANetworkError.unexpectedResponseType
             }
             
+            // The range of accepted status codes could be included inside `TANetworkRequest`
             guard 200...299 ~= httpResponse.statusCode else {
                 throw TANetworkError.unexpectedStatusCode
             }
@@ -55,6 +61,8 @@ public struct TANetwork: TANetworkType {
     }
     
     private func makeRequestURL(for request: TANetworkRequest) -> URLRequest? {
+        // If necessary, I would add proper errors to be thrown here to avoid
+        // returning `nil` to all possible errors that can happen here.
         guard let url = URL(string: request.url) else {
             return nil
         }
