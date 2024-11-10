@@ -1,0 +1,23 @@
+{
+  "sourceLanguage" : "en-US",
+  "strings" : {
+    "main-place-title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en-US" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Places"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Locais"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

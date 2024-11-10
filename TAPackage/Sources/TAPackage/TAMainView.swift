@@ -18,7 +18,7 @@ public struct TAMainView: View {
     public var body: some View {
         NavigationView {
             TAPlacesListingView(viewModel: listingViewModel)
-                .navigationTitle("Places")
+                .navigationTitle(Localizable.mainPlaceTitle)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
