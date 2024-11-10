@@ -29,6 +29,7 @@ struct TAPlaceSearchView: View {
             Form {
                 Section {
                     Toggle("Search by Coordinates", isOn: $viewModel.searchByCoordinates)
+                        .accessibilityHint("If Search by Coordinates is switched on, you'll need to search by providing latitude and longitude, otherwise all you need to provide is the name of a place")
                 }
                 
                 Section(viewModel.searchByCoordinates ? "Coordinates" : "Place") {
@@ -50,6 +51,7 @@ struct TAPlaceSearchView: View {
                         Text("Done")
                     }
                     .disabled(isDoneButtonDisabled)
+                    .accessibilityHint("By selecting this button, you'll be redirected to the Wikipedia app.")
                 }
                 
                 ToolbarItem(placement: .cancellationAction) {

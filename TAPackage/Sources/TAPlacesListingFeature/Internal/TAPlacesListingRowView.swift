@@ -38,8 +38,9 @@ struct TAPlacesListingRowView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(place.name ?? "Unknown place")
+        .accessibilityValue("Latitude: \(place.latitude) Longitude: \(place.longitude)")
         .accessibilityHint("Redirects to Wikipedia app and opens the selected location")
-        .accessibilityAddTraits(.isLink)
+        .accessibilityAddTraits(.isButton)
     }
 }
 
